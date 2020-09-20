@@ -1805,6 +1805,17 @@
 # endif // !defined(ASIO_DISABLE_STD_COROUTINE)
 #endif // !defined(ASIO_HAS_STD_COROUTINE)
 
+// Kernel support for MSG_NOSIGNAL.
+#if !defined(BOOST_ASIO_HAS_MSG_NOSIGNAL)
+# if defined(__linux__)
+#  define BOOST_ASIO_HAS_MSG_NOSIGNAL 1
+# elif defined(_POSIX_VERSION)
+#  if (_POSIX_VERSION >= 200809L)
+#   define BOOST_ASIO_HAS_MSG_NOSIGNAL 1
+#  endif // _POSIX_VERSION >= 200809L
+# endif // defined(_POSIX_VERSION)
+#endif // !defined(BOOST_ASIO_HAS_MSG_NOSIGNAL)
+
 // Compiler support for the the [[nodiscard]] attribute.
 #if !defined(ASIO_NODISCARD)
 # if defined(__has_cpp_attribute)
